@@ -1,0 +1,17 @@
+extends ./layout/commom.pug
+block content
+  .create
+    h2 Create a new book
+    a(href="/book" class='btn btn-primary') Get Back
+    if errors
+
+      each err in errors
+        .alert.alert-danger.errorfill= err
+    form(class="d-flex form" , action="/book/create" , method="POST")
+      .form-group
+        label(for='exampleInputEmail1') Name
+        input#exampleInputEmail1.form-control(type='text', name="name", value = values ? values.name : '')
+      .form-group
+        label(for='exampleInputPassword1') Author
+        input#exampleInputPassword1.form-control(type='text', name="author", value=values ? values.author : '')
+      button.btn.btn-primary(type='submit') Submit

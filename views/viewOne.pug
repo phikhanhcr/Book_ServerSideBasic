@@ -1,0 +1,12 @@
+extends ./layout/commom.pug
+block content
+  h3 Information of this book
+  a(href="/book" class="btn btn-primary") Get back
+  .card
+    .wrapper
+      .img(style=`background-image: url(${url});`)
+      .infor
+        .wrap
+          .title=book.name
+          .author=book.author
+          button.btn.btn-primary Mua ko em

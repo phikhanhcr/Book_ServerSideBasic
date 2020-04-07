@@ -1,0 +1,15 @@
+extends ../layout/commom.pug
+block content
+  .create
+    h2 Login
+    if errors
+      each err in errors
+        .alert.alert-danger.errorfill= err
+    form(class="form", method="POST")
+      .form-group
+        label(for='exampleInputEmail1') Email
+        input#exampleInputEmail1.form-control(type='email', name="email", value = values ? values.email : '')
+      .form-group
+        label(for='exampleInputPassword1') Password
+        input#exampleInputPassword1.form-control(type='password', name="pass", value=values ? values.pass : '')
+      button.btn.btn-primary(type='submit') Login

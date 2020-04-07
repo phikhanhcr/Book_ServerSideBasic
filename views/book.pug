@@ -1,0 +1,31 @@
+extends ./layout/commom.pug
+block content 
+  .book 
+    h1 
+      a(href="/book") All books
+    br 
+    .header 
+      a(href="/book/create" class="btn btn-primary") Create new
+      form(action="/book/search", ,method="GET" class="search")
+        input(type="text" , placeholder="Search" , id="input" , class='form-control', name="name")
+        button(class="btn btn-primary") Search
+    br
+    br
+    table.table
+      tr
+        th Name
+        th Author
+        th Information 
+      each book in books
+        tr
+          td= book.name
+          td= book.author 
+          td
+            a(href="/book/" + book.id , class="btn btn-secondary") View 
+    a(href="/login" class="btn btn-primary") Log Out
+  script.
+    var searchInput = document.getElementById('input');
+    var value = searchInput.value;
+    searchInput.addEventListener('change', function() {
+      sessionStorage.setItem('draft', searchInput.value)})
+    searchInput.value = sessionStorage.getItem('draft');
