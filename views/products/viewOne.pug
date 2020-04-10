@@ -1,0 +1,13 @@
+extends ../layout/commom.pug
+block content
+  h2 Thích thì mua , không thích thì mua
+  h3 Information of this products
+  a(href="/products" class="btn btn-primary") Get back
+  .card
+    .wrapper
+      .img(style=`background-image: url("/images/${Math.floor(Math.random() * 7) + 1}.jpg")`)
+      .infor
+        .wrap
+          .title=product.name
+          .author=product.price
+          button.btn.btn-primary Mua ko em

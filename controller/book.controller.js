@@ -43,7 +43,7 @@ module.exports.search = (req, res) => {
 }
 module.exports.findId = (req, res) => {
   var id = req.params.id;
-  var randomIndex = Math.floor(Math.random() * 9)
+  var randomIndex = Math.floor(Math.random() * 7 + 1)
   var url = `/images/${randomIndex}.jpg`;
   console.log(id);
   res.render('viewOne', {

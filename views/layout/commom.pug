@@ -4,5 +4,7 @@ html
     link(rel="stylesheet",href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
     link(rel="stylesheet" , href="/style/create.css")
   body(style='background-image: url("/images/background.png");')
+    if user
+      p= user.name
     .container
       block content

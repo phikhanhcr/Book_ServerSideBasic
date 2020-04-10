@@ -1,0 +1,16 @@
+File này ghi những lưu ý khi học khóa này , sau đỡ phải ngáo ngơ
+
+I) EVIROMENT VARIABLE 
+1.EVIROMENT VARIABLE is a biến , save private information(gmail , password) , 
+  you dont want show it ,and send it to Github, rememmber dont put it in Github
+  2. How to use: 
+    process.env.<Name of VARIABLE>
+
+II) Hash password
+  using md5
+
+III) Avoid someone try to change my cookie and 
+    convert it to something else 
+    +) Use singed cookid (read documentation to know the details)
+        // Set res.cookie
+        // res.clearCookie('name_Cookie')

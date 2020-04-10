@@ -1,0 +1,70 @@
+extends ../layout/commom.pug
+block content 
+  h1 
+    a(href="/products") Products
+  h1 
+    a(href="/book") All books
+  form(action="/products/search" , method="GET").d-flex
+    input.form-control(type="text",placeholder="Search", id="search" ,name="name" ,style="width:200px;margin-right:30px" )
+    button(class="btn btn-primary") Search 
+  br
+  br
+  .product
+    .row
+      p= nothing
+      each item in products
+        .col-lg-3.col-sm-6.col-12.khung-anh
+          .wrapper-product
+            .img-product(style=`background-image: url("/images/${Math.floor(Math.random() * 7) + 1}.jpg")`)
+            .details
+              h4= item.name 
+              p= item.description 
+              i= item.price +" $"
+              a(href="/products/" + item.id).btn.btn-primary Buy Now
+  .number-page
+    nav(aria-label='Page navigation example')
+      ul.pagination
+        li.page-item
+          a#pre.page-link Previous
+        li.page-item
+          a.page-link.id-link(href=`/products?page=${href}`) 1
+        li.page-item
+          a.page-link.id-link(href="#") 2
+        li.page-item
+          a.page-link.id-link(href="#") 3
+        li.page-item
+          a#next.page-link Next
+  script.
+    //console.log(arr[1].text);
+    document.getElementById('next').addEventListener('click' , function() {
+    var arr = Array.from(document.getElementsByClassName('id-link'));
+    var value = arr.map(ele => {
+    return parseInt(ele.text);
+    })
+    if(value[0] == 13){
+    return;
+    }
+    var newValue = value.map(ele => {
+      return ele + 3;
+    })
+    for(var i = 0 ; i < 3 ; i++ ){
+      arr[i].text = newValue[i];
+    }
+    })
+    document.getElementById('pre').addEventListener('click' , function() {
+    var arr = Array.from(document.getElementsByClassName('id-link'));
+    var value = arr.map(ele => {
+    return parseInt(ele.text);
+    })
+    if(value[0] == 1){
+    return;
+    }
+    var newValue = value.map(ele => {
+    return ele - 3;
+    })
+    console.log(newValue);
+    for(var i = 0 ; i < 3 ; i++ ){
+    arr[i].text = newValue[i];
+    }
+    })
+    

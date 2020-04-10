@@ -1,6 +1,11 @@
+const md5 = require('md5');
 const db = require('../db');
 module.exports.login = (req , res , next) => {
-  if(req.cookies.account) {
+  // In the login page 
+  // I try to check Is there any cookie from the 
+  // previous session ? , if yes , delete it for 
+  // mew login session
+  if(req.signedCookies.account) {
     res.clearCookie('account')
   }
   res.render("login/login")
@@ -9,19 +14,27 @@ module.exports.postLogin = (req , res, next) => {
   var email = req.body.email;
   var password = req.body.pass;
   var emailUser = db.get('books').find({email : email}).value();
+  
   if(!emailUser) {
     res.render('login/login', {
       'errors' : ['Account doesn\'t exist.']
     })
     return;
   }
-  if(password !== emailUser.pass) {
+  var hashedPassword = md5(password);
+  console.log(hashedPassword);
+  if(emailUser.pass !== hashedPassword) {
     res.render('login/login', {
       'errors' : ['Wrong password.'], 
-      'values' : req.body
+      'values' : req.body.email
     })
     return;
   }
-  res.cookie('account' , emailUser.email);
+  // set cookie to login : id of user
+  
+  res.cookie('account' , emailUser.id , {
+    signed: true // để có thể biến đổi signed cookie
+  });
+
   res.redirect('/book');
 }
