@@ -20,51 +20,87 @@ block content
               h4= item.name 
               p= item.description 
               i= item.price +" $"
-              a(href="/products/" + item.id).btn.btn-primary Buy Now
+              a(href="/products/" + item.id + `?page=${pageCurrent}`).btn.btn-primary Buy Now
   .number-page
     nav(aria-label='Page navigation example')
       ul.pagination
         li.page-item
           a#pre.page-link Previous
         li.page-item
-          a.page-link.id-link(href=`/products?page=${href}`) 1
+          a.page-link.id-link(href=`/products?page=${1}`)= fixed1
         li.page-item
-          a.page-link.id-link(href="#") 2
+          a.page-link.id-link(href=`/products?page=${2}`)= fixed2
         li.page-item
-          a.page-link.id-link(href="#") 3
+          a.page-link.id-link(href=`/products?page=${3}`)= fixed3
         li.page-item
           a#next.page-link Next
   script.
-    //console.log(arr[1].text);
-    document.getElementById('next').addEventListener('click' , function() {
     var arr = Array.from(document.getElementsByClassName('id-link'));
     var value = arr.map(ele => {
     return parseInt(ele.text);
     })
-    if(value[0] == 13){
+    for(var i = 0; i < 3 ; i++ ){
+    arr[i].setAttribute('href', `products?page=${value[i]}`);
+    }
+    document.getElementById('next').addEventListener('click', function () {
+    var value = arr.map(ele => {
+    return parseInt(ele.text);
+    })
+    console.log("current: " + value);
+    if (value[0] == 13) {
+    arr[1].text = "";
+    arr[2].text = "";
     return;
     }
     var newValue = value.map(ele => {
-      return ele + 3;
+    return ele + 3;
     })
-    for(var i = 0 ; i < 3 ; i++ ){
-      arr[i].text = newValue[i];
+    console.log("next" + newValue);
+    for (var i = 0; i < 3; i++) {
+    arr[i].text = newValue[i];
+    if (newValue[i] == 13) {
+    arr[i].setAttribute('href', `products?page=13`);
+    arr[i+1].text = "";
+    arr[i+2].text = ""; 
+    arr[i+1].setAttribute('id' , 'none');
+    arr[i+2].setAttribute('id' , 'none');
+    return;
+    }
+    }
+    for(var i = 0; i < 3 ; i++ ){
+    arr[i].setAttribute('href', `products?page=${newValue[i]}`);
     }
     })
-    document.getElementById('pre').addEventListener('click' , function() {
+
+    //console.log(arr[1].text);
+    document.getElementById('pre').addEventListener('click', function () {
     var arr = Array.from(document.getElementsByClassName('id-link'));
+    if(arr[1].text == "" || arr[2].text == "") {
+    arr[1].text = 14;
+    arr[2].text = 15;
+    arr[1].setAttribute('id' , 'none');
+    arr[2].setAttribute('id' , 'none');
+    }
     var value = arr.map(ele => {
     return parseInt(ele.text);
     })
-    if(value[0] == 1){
+    if (value[0] == 1) {
     return;
     }
     var newValue = value.map(ele => {
     return ele - 3;
     })
     console.log(newValue);
-    for(var i = 0 ; i < 3 ; i++ ){
+    if(newValue[0] == 10) {
+    arr[1].setAttribute('id' , 'block');
+    arr[2].setAttribute('id' , 'block');
+    }
+    for (var i = 0; i < 3; i++) {
     arr[i].text = newValue[i];
     }
+    console.log(newValue);
+    for(var i = 0; i < 3 ; i++ ){
+    arr[i].setAttribute('href', `products?page=${newValue[i]}`);
+    }
     })
-    
+
