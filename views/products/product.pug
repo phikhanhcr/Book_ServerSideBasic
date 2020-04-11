@@ -40,7 +40,7 @@ block content
     return parseInt(ele.text);
     })
     for(var i = 0; i < 3 ; i++ ){
-    arr[i].setAttribute('href', `products?page=${value[i]}`);
+     arr[i].setAttribute('href', `products?page=${value[i]}`);
     }
     document.getElementById('next').addEventListener('click', function () {
     var value = arr.map(ele => {
