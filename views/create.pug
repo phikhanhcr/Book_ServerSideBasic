@@ -7,11 +7,14 @@ block content
 
       each err in errors
         .alert.alert-danger.errorfill= err
-    form(class="d-flex form" , action="/book/create" , method="POST")
+    form(class="d-flex form" , action="/book/create" , method="POST" , enctype="multipart/form-data")
       .form-group
         label(for='exampleInputEmail1') Name
         input#exampleInputEmail1.form-control(type='text', name="name", value = values ? values.name : '')
       .form-group
         label(for='exampleInputPassword1') Author
         input#exampleInputPassword1.form-control(type='text', name="author", value=values ? values.author : '')
+      .form-group
+        label(for='avatar') avatar
+        input#avatar.form-control-file(type='file', name="avatar")  
       button.btn.btn-primary(type='submit') Submit

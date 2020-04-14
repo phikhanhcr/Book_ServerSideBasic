@@ -1,12 +1,15 @@
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var multer  = require('multer');
 var removeAccents = require('../removeAccents')
 const db = require('../db');
 const shortid = require('shortid');
 
 module.exports.home = (req, res) => {
   console.log(req.cookies);
+
   res.render('book', {
-    'books': db.get('books').value()
+    'books': db.get('books').value(), 
+    "totalCart" : ""
   })
 }
 
@@ -19,11 +22,13 @@ module.exports.createPost = (req, res) => {
   var name = req.body.name;
   var author = req.body.author;
   var id = shortid.generate();
-
+  //req.body.avatar = req.file.path;
+  console.log(req.file);
   var newBook = {
     name: name,
     author: author,
-    id: id
+    id: id, 
+    avatar : '/' + req.file.path.split('\\').slice(1).join('/')
   }
   db.get('books').push(newBook).write();
   res.redirect('/book')
@@ -36,7 +41,8 @@ module.exports.search = (req, res) => {
   console.log(searchUnicode);
   var bookSearch = db.get('books').value().filter(ele => {
     return removeAccents(ele.name).toLowerCase().indexOf(searchUnicode.toLowerCase()) !== -1;
-  })
+  });
+  console.log(bookSearch);
   res.render("book", {
     'books': bookSearch
   })

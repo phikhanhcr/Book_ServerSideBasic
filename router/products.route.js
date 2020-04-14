@@ -5,4 +5,7 @@ var router = express.Router();
 router.get('/' , controller.product);
 router.get('/search' , controller.searchProduct);
 router.get('/:id' , controller.viewProduct);
+
+//router.get('/cartadd/:productId' , controller.addToCart);
+
 module.exports = router;

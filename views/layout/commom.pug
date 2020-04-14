@@ -4,7 +4,29 @@ html
     link(rel="stylesheet",href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
     link(rel="stylesheet" , href="/style/create.css")
   body(style='background-image: url("/images/background.png");')
-    if user
-      p= user.name
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='#') Phi Khanh Cr
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            a.nav-link(href='/book')
+              | Book
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='/products') Products
+          li.nav-item.dropdown
+            if user
+              a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')= user.name
+              
+            .dropdown-menu(aria-labelledby='navbarDropdown')
+              a.dropdown-item(href='#') Profile
+              a.dropdown-item(href='#') Cart
+              .dropdown-divider
+              a.dropdown-item(href='/login') Log Out
+          li.nav-item
+            a.nav-link(href='#')
+              p= `Cart ${totalCart}`
     .container
       block content

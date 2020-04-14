@@ -3,6 +3,7 @@ var removeAccents = require("../removeAccents");
 const db = require('../db');
 
 module.exports.product = (req, res, next) => {
+  //var totalCart = req.signedCookies.totalCart;
   // var randomIndex = Math.floor(Math.random() * 9);
   // var url = `/images/${randomIndex}.jpg`;
   // phan trang , 8 products per page 
@@ -10,7 +11,8 @@ module.exports.product = (req, res, next) => {
   var perPage = 8;
   var start = (page - 1) * perPage;
   var end = page * perPage;
-
+  
+  
   // page display 
   var pageCurrent = req.query.page ? req.query.page : 1;
 
@@ -43,13 +45,14 @@ module.exports.product = (req, res, next) => {
     }
   }
   //console.log(newArray);
-  console.log(pageCurrent);
+
   res.render('products/product', {
     'products': db.get('products').value().slice(start, end),
     'fixed1': newArray.first,
     'fixed2': newArray.second,
     'fixed3': newArray.third,
-    'pageCurrent': pageCurrent
+    'pageCurrent': pageCurrent,
+    "totalCart" : res.locals.totalCart
   })
 }
 
@@ -81,6 +84,27 @@ module.exports.viewProduct = (req, res, next) => {
     'product': product,
     'pageCurrent': getBackPage
   });
+}
+
+module.exports.addToCart = (req , res , next) => {
+  var productId = req.params.productId;
+  var pageCurrent = req.query.page;
+  
+  var sessionId = req.signedCookies.sessionId;
+  
+  if(!sessionId) {
+    res.redirect('/products');
+    return;
+  }
+  var count = db.get("sessions")
+                .find({id : sessionId})
+                .get('cart.' + productId , 0)
+                .value();
+  db.get('sessions')
+    .find({id : sessionId })
+    .set('cart.' + productId , count + 1)
+    .write();
+  res.redirect('/products?page=' + pageCurrent);
 }
 // mission tomorrow
 // 1. Phân trang 13 

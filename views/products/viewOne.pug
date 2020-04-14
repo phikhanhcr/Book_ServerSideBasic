@@ -10,4 +10,5 @@ block content
         .wrap
           .title=product.name
           .author=product.price
-          button.btn.btn-primary Mua ko em
+          a(href="/cart/add/" + product.id + `?page=${pageCurrent}`).btn.btn-primary Mua ko em
+          
