@@ -1,0 +1,21 @@
+extends ../layout/commom.pug
+block content
+  .container
+    h3 Buy something
+    br
+    br
+    table.table
+      tr
+        th Chooes
+        th Name
+        th Số Lượng
+        th Price
+
+      each item in name
+        tr
+          td 
+            input(type="checkbox")
+          td= item  
+          each sol in soluong
+            td= sol   
+        

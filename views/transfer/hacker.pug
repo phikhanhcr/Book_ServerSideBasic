@@ -1,0 +1,21 @@
+html
+  head
+    script(src='https://kit.fontawesome.com/05ef113fe5.js', crossorigin='anonymous')
+    link(rel="stylesheet",href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+    link(rel="stylesheet" , href="/style/create.css")
+  body(style='background-image: url("/images/background.png");')
+    .container
+      .create
+        h2 Transfer
+        if errors
+          each err in errors
+            .alert.alert-danger.errorfill= err
+        form(class="form", method="POST")
+          input(type='hidden', name='_csrf', value=csrfToken)
+          .form-group
+            label(for='account') Account
+            input#account.form-control(type='name', name="accountNumber")
+          .form-group
+            label(for='amoout') Amount
+            input#amoout.form-control(type='number', name="amount")
+          button.btn.btn-primary(type='submit') Transfer

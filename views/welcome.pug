@@ -1,20 +1,25 @@
-extends ./layout/commom.pug 
-block content
-  .wrapper-bia
-    .bia
-      .bia-title
-        .avatar(style='background-image: url("/images/avatar.png")')
-        .title
-          p "Web xem sấch thôi mà anh em , vào quẩy tý cho vui!"
-        .contact
-          p Contact Me:      
-          a(href='https://www.facebook.com/sykhanh.ho.7', target='_blank')
-            i.fab.fa-facebook.fa-2x
-          a(href='https://www.instagram.com/phikhanhcr', target='_blank')
-            i.fab.fa-instagram.fa-2x
-          a(href='https://twitter.com/AkaiShu12552711', target='_blank')
-            i.fab.fa-twitter.fa-2x
-          a(href='https://github.com/phikhanhcr', target='_blank')
-            i.fab.fa-github.fa-2x
-      .bia-anh(style='background-image: url("/images/bia.png")')
-  a(href=url).btn.btn-primary Login Now!
+html
+  head
+    script(src='https://kit.fontawesome.com/05ef113fe5.js', crossorigin='anonymous')
+    link(rel="stylesheet",href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+    link(rel="stylesheet" , href="/style/create.css")
+  body(style='background-image: url("/images/background.png");')
+    .container
+      .wrapper-bia
+        .bia
+          .bia-title
+            .avatar(style='background-image: url("/images/avatar.png")')
+            .title
+              p "Web xem sấch thôi mà anh em , vào quẩy tý cho vui!"
+            .contact
+              p Contact Me:      
+              a(href='https://www.facebook.com/sykhanh.ho.7', target='_blank')
+                i.fab.fa-facebook.fa-2x
+              a(href='https://www.instagram.com/phikhanhcr', target='_blank')
+                i.fab.fa-instagram.fa-2x
+              a(href='https://twitter.com/AkaiShu12552711', target='_blank')
+                i.fab.fa-twitter.fa-2x
+              a(href='https://github.com/phikhanhcr', target='_blank')
+                i.fab.fa-github.fa-2x
+          .bia-anh(style='background-image: url("/images/bia.png")')
+      a(href=url).btn.btn-primary Login Now!

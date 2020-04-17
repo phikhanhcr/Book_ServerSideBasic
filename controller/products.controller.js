@@ -45,7 +45,7 @@ module.exports.product = (req, res, next) => {
     }
   }
   //console.log(newArray);
-
+  console.log(res.locals.totalCart);
   res.render('products/product', {
     'products': db.get('products').value().slice(start, end),
     'fixed1': newArray.first,
@@ -74,8 +74,6 @@ module.exports.searchProduct = (req, res, next) => {
   })
 }
 
-
-
 module.exports.viewProduct = (req, res, next) => {
   var getBackPage = req.query.page;
   var id = req.params.id;
@@ -86,26 +84,8 @@ module.exports.viewProduct = (req, res, next) => {
   });
 }
 
-module.exports.addToCart = (req , res , next) => {
-  var productId = req.params.productId;
-  var pageCurrent = req.query.page;
-  
-  var sessionId = req.signedCookies.sessionId;
-  
-  if(!sessionId) {
-    res.redirect('/products');
-    return;
-  }
-  var count = db.get("sessions")
-                .find({id : sessionId})
-                .get('cart.' + productId , 0)
-                .value();
-  db.get('sessions')
-    .find({id : sessionId })
-    .set('cart.' + productId , count + 1)
-    .write();
-  res.redirect('/products?page=' + pageCurrent);
-}
+
+
 // mission tomorrow
 // 1. Phân trang 13 
 // view a product and press get back , move to page current 
