@@ -1,13 +1,237 @@
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <title>Document</title>
 </head>
-<body onload="document.formHacker.submit()">
-  <form action="" name="formHacker" >
-    <input type="text" value="21710000351363">
-    <input type="number" value="1000000">
-  </form>
+<style>
+  .viewOne {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
+
+  .viewOne-book {
+    height: 500px;
+    width: 800px;
+    background-color: whitesmoke;
+    display: flex;
+    border-radius: 15px;
+    border : 2px solid whitesmoke;
+  }
+  .viewOne-book .img-book {
+    width: 50%;
+    height: 100%;
+    background-color: aqua;
+    background-image: url('./public/images/6.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15px;
+    transition: all 1s;
+  }
+  .viewOne-book .img-book:hover {
+    width: 560px;
+    height: 500px;
+  }
+  .viewOne-book .infor-book {
+    align-items: center;
+    margin-top: 70px;
+    width: 50%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+ 
+</style>
+
+<body>
+  <div>
+    <table id="tableCart">
+      <tr>
+        <th>
+          Check
+        </th>
+        <th>Price</th>
+        <th>Amount</th>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="checkbox"></td>
+        <td class="price">5</td>
+        <td class="amount">6</td>
+        <td class="total">6</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="checkbox"></td>
+        <td class="price">10</td>
+        <td class="amount">6</td>
+        <td class="total">16</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="checkbox"></td>
+        <td id="hi" class="price">20</td>
+        <td class="amount">6</td>
+        <td class="total">5</td>
+      </tr>
+    </table>
+    <p id="total"></p>
+  </div>
+  <!-- <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li id="pre" class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link page-number" href="#">1</a></li>
+      <li class="page-item"><a class="page-link page-number" href="#">2</a></li>
+      <li class="page-item"><a class="page-link page-number" href="#">3</a></li>
+      <li id="next" class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+    <B>Total Products</B>
+    <p id="total">110</p>
+  </nav> -->
+
+  <!-- <div class="container">
+    <div class="viewOne">
+      <div class="viewOne-book">
+        <div class="img-book">
+        </div>
+        <div class="infor-book">
+          <div class="title"><h3>Con Mèo Dạy Hải Âu Bay</h3></div>
+          <div class="desc"><i>Truyện nước ngoài</i> </div>
+          <div class="price"><h4>100$</h4></div>
+          <div class="btn">
+            <a href="#" class="btn btn-primary">Get to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <script>
+    // var next = document.getElementById('next');
+    // next.addEventListener('click', hi);
+    // var pre = document.getElementById('pre');
+    // pre.addEventListener('click', hello);
+    // var total = parseInt(document.getElementById('total').innerHTML);
+    // // so page
+    // var perPage = Math.floor(total / 8);
+    // console.log(perPage)
+    // var displayPerPage = perPage % 3;
+    // console.log(perPage);
+
+    // // bien page 1 , 2 , 3 ban dau 
+    // var arr = Array.from(document.getElementsByClassName('page-number'));
+    // var arrNumber = arr.map(ele => {
+    //   return parseInt(ele.text);
+    // }) // [1,2,3]
+    // for (var i = 0; i < 3; i++) {
+    //   arr[i].setAttribute('href', `/books/?page=${arrNumber[i]}`);
+    // }
+
+    // function hi() {
+    //   var arr = Array.from(document.getElementsByClassName('page-number'));
+    //   var arrNumber = arr.map(ele => {
+    //     return parseInt(ele.text);
+    //   }) // [1,2,3]
+
+    //   if (arrNumber[0] == 13) {
+    //     arrNumber[2].text = "";
+    //     return;
+    //   }
+    //   var newValue = arrNumber.map(ele => {
+    //     return ele + 3;
+    //   })
+    //   console.log(newValue);
+
+    //   for (var i = 0; i < 3; i++) {
+    //     arr[i].setAttribute('href', `/books/?page=${newValue[i]}`);
+    //     if (newValue[0] == 13) {
+    //       arr[0].text = 13;
+    //       arr[1].text = 14;
+    //       arr[2].text = "";
+    //       arr[1].setAttribute('href', `/books/?page=${perPage + 1}`);
+    //       arr[2].parentNode.setAttribute('style', 'display:none');
+    //       arr[2].setAttribute('href', '#');
+    //       return;
+    //     }
+    //     arr[i].text = newValue[i];
+    //   }
+    // }
+
+    // function hello() {
+    //   var arr = Array.from(document.getElementsByClassName('page-number'));
+    //   console.log(arr[0].text);
+    //   if (arr[0].text == 13) {
+    //     arr[2].text = 15;
+    //   }
+    //   var arrNumber = arr.map(ele => {
+    //     return parseInt(ele.text);
+    //   })
+    //   console.log(arrNumber);
+
+    //   if (arrNumber[0] == 1) {
+    //     return;
+    //   }
+    //   var newValue = arrNumber.map(ele => {
+    //     return ele - 3;
+    //   })
+    //   console.log(newValue)
+    //   for (var i = 0; i < 3; i++) {
+    //     arr[i].setAttribute('href', `/books/?page=${newValue[i]}`);
+    //     if (newValue[i] <= 0) {
+    //       return;
+    //     }
+    //     arr[i].text = newValue[i];
+    //   }
+    // }
+
+
+
+
+
+
+
+    //tinh tien 
+    var table = document.getElementById('tableCart');
+    var x = Array.from(document.getElementsByClassName("checkbox"));
+    var total = Array.from(document.getElementsByClassName("total"));
+    var totalArray = [];
+    for (var i of total) {
+      totalArray.push(parseInt(i.innerHTML));
+    }
+    console.log(totalArray);
+    table.addEventListener('change', hi);
+    var count = 0;
+    var arr= [];
+    function hi() {
+      var money = 0;
+      for (var i = 0; i < x.length; i++) {
+        if (x[i].checked) {
+          if (arr.indexOf(i) == -1) {
+            arr.push(i);
+          }
+          count++;
+        }
+        if (!x[i].checked) {
+          console.log('no check + ', i);
+          if (arr.indexOf(i) !== -1) {
+            arr.splice(arr.indexOf(i), 1);
+          }
+        }
+      }
+      count = 0;
+      console.log(arr);
+      for (var i of arr) {
+        money += totalArray[i];
+      }
+      console.log(money);
+      document.getElementById('total').innerHTML = money;
+      money = 0
+    }
+
+  </script>
 </body>
+
 </html>

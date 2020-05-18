@@ -1,5 +1,5 @@
-var db = require('../db')
-module.exports.checkLogin = (req , res , next) => {
+var Books = require('../models/book.model');
+module.exports.checkLogin = async (req , res , next) => {
   // 1. get cookie , if not , redirect and return 
   
   // vì đã singed = true , nếu cookie thì chỉ ở mãi trang login
@@ -12,16 +12,16 @@ module.exports.checkLogin = (req , res , next) => {
     return;
   }
   
-  var user = db.get('books').find({id : req.signedCookies.account}).value();
-  //console.log(user);
+  var User = await Books.find({'_id' : req.signedCookies.account});
+  //console.log(User);
   
   // 2.check fake or real cookie, if it is fake , the same as above 
-  if(!user) {
+  if(!User) {
     res.redirect('login');
     return;
   }
-  
+  //console.log('user + ' +  User);
   // create a local variable and can use it in commom.pug 
-  res.locals.user = user;
+  res.locals.User = User[0];
   next();
 }

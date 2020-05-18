@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const db = require('../db');
+var Book = require('../models/book.model');
 module.exports.login = (req , res , next) => {
   // In the login page 
   // I try to check Is there any cookie from the 
@@ -10,11 +10,12 @@ module.exports.login = (req , res , next) => {
   }
   res.render("login/login")
 }
-module.exports.postLogin = (req , res, next) => {
+module.exports.postLogin = async (req , res, next) => {
   var email = req.body.email;
   var password = req.body.pass;
-  var emailUser = db.get('books').find({email : email}).value();
-  
+  var emailUser = await Book.find({'email' : email});
+  console.log(emailUser) ;
+  console.log(emailUser[0].name);
   if(!emailUser) {
     res.render('login/login', {
       'errors' : ['Account doesn\'t exist.']
@@ -22,8 +23,9 @@ module.exports.postLogin = (req , res, next) => {
     return;
   }
   var hashedPassword = md5(password);
-  console.log(hashedPassword);
-  if(emailUser.pass !== hashedPassword) {
+  //console.log(hashedPassword);
+
+  if(emailUser[0].pass !== hashedPassword) {
     res.render('login/login', {
       'errors' : ['Wrong password.'], 
       'values' : req.body.email
@@ -32,7 +34,7 @@ module.exports.postLogin = (req , res, next) => {
   }
   // set cookie to login : id of user
   
-  res.cookie('account' , emailUser.id , {
+  res.cookie('account' , emailUser[0]._id , {
     signed: true // để có thể biến đổi signed cookie
   });
 

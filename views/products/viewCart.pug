@@ -4,18 +4,25 @@ block content
     h3 Buy something
     br
     br
-    table.table
+    table.table(style="text-align:center")#table
       tr
-        th Chooes
+        th Choose
         th Name
         th Số Lượng
         th Price
-
-      each item in name
+        th Money
+      each item in value
         tr
           td 
-            input(type="checkbox")
-          td= item  
-          each sol in soluong
-            td= sol   
-        
+            input(type="checkbox").checkbox
+          td= item.name
+          td= item.amount
+          td= item.price
+          td.total= item.money
+    span Total Money
+    span &nbsp
+    span &nbsp
+    span &nbsp
+    p#total
+
+  

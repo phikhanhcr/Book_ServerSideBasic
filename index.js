@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 3000;
 var cookieParser = require('cookie-parser')
 const pug = require('pug');
 const db = require('./db')
@@ -17,9 +17,13 @@ var cartRoute = require('./router/cart.route')
 var getNumberProducts = require('./middleware/session/getNumberproducts');
 var transferRouter = require('./router/transfer.route');
 var csrf = require('csurf');
-//const mongoose = require('mongoose');
+const mongoose = require('mongoose');
+var apiRouter = require('./api/route/products.route');
+var apiProfiles = require('./api/route/profiles.route');
+var User = require('./models/book.model');
 
-//mongoose.connect(process.env.MongoDb);
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MongoDb);
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser(process.env.SingedCookies));
@@ -33,7 +37,7 @@ app.set('view engine', 'pug')
 app.set('views', './views');
 
 
-app.get('/' , (req , res ) => {
+app.get('/' , async (req , res ) => {
   // có thể tách ra 1 file middleware nhưng ko thích ^^ 
   // nếu check có cookie hay không
   if(!req.signedCookies.account) {
@@ -42,8 +46,8 @@ app.get('/' , (req , res ) => {
     });
     return;
   }
+  var user = await User.findById({ _id : req.signedCookies.account});
   // check có cookie trùng với email của người dùng hay ko , tránh fake cookie thì vẫn nhận 
-  var user = db.get('books').find({id : req.signedCookies.account }).value();
   if(!user) {
     res.render("welcome" , {
       'url' : '/login'
@@ -56,6 +60,7 @@ app.get('/' , (req , res ) => {
     'url' : '/book'
   });
 })
+
 app.use(getNumberProducts.getNumber);
 app.use('/products' , checkCookie.checkLogin, getNumberProducts.getNumber , routerProducts);
 app.use('/book' , checkCookie.checkLogin ,routerBook);
@@ -64,6 +69,9 @@ app.use('/login' , routerLogin);
 app.use('/cart' , getNumberProducts.getNumber ,cartRoute);
 
 app.use('/transfer' ,checkCookie.checkLogin ,transferRouter)
+app.use('/api/products' , apiRouter);
+
+app.use('/api/profiles' , apiProfiles);
 // use static file , css , images
 app.use(express.static('public'));
 
